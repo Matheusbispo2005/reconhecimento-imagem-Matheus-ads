@@ -1,53 +1,65 @@
 # Explicação do código `num_primos.py`
 
-Este arquivo contém a função `eh_primo(n)`, que verifica se um número inteiro `n` é primo.
+Este arquivo contém uma função para verificar se um número inteiro é primo e um bloco de execução para testar alguns exemplos.
 
-## Como a função funciona
+## Estrutura do código
 
-1. `if n <= 1:`
+- `TESTE_NUMEROS` contém a lista de números usados no teste.
+- `eh_primo(numero)` verifica se um número é primo.
+- `formatar_resultado(numero)` monta a mensagem de saída.
+- `main()` executa os testes e imprime os resultados.
+
+## Como `eh_primo(numero)` funciona
+
+1. `numero <= 1`
    - Números menores ou iguais a 1 não são primos.
-   - A função retorna `False` nesses casos.
+   - Retorna `False`.
 
-2. `if n <= 3:`
-   - Os números 2 e 3 são primos.
-   - A função retorna `True` para esses valores.
+2. `numero <= 3`
+   - 2 e 3 são primos.
+   - Retorna `True`.
 
-3. `if n % 2 == 0 or n % 3 == 0:`
-   - Se `n` for divisível por 2 ou por 3, não é primo.
-   - A função retorna `False` nesses casos.
+3. `numero % 2 == 0 or numero % 3 == 0`
+   - Números pares maiores que 2 ou divisíveis por 3 não são primos.
+   - Retorna `False`.
 
-4. Verificação por outros divisores:
-   - A partir de 5, a função verifica apenas números da forma `6k - 1` e `6k + 1`.
-   - Isso acontece porque todo número primo maior que 3 é da forma 6k ± 1.
-   - A variável `i` começa em 5 e incrementa de 6 em 6.
+4. Verificação com outros divisores:
+   - A função testa divisores a partir de 5.
+   - Ela usa um padrão de incremento de 6 em 6 para verificar apenas os candidatos `6k - 1` e `6k + 1`.
+   - Isso reduz a quantidade de verificações sem perder precisão.
 
-5. `while i * i <= n:`
-   - O loop continua enquanto `i` ao quadrado for menor ou igual a `n`.
-   - Isso é suficiente para encontrar um divisor, caso exista, e torna a verificação mais eficiente.
+5. `while divisor * divisor <= numero:`
+   - O loop para quando o divisor ultrapassa a raiz quadrada de `numero`.
+   - Se não encontrar divisor até esse ponto, o número é primo.
 
-6. `if n % i == 0 or n % (i + 2) == 0:`
-   - A função testa se `n` é divisível por `i` ou por `i + 2`.
-   - Se for divisível, retorna `False`.
+6. `if numero % divisor == 0 or numero % (divisor + 2) == 0:`
+   - Verifica se `numero` é divisível por `divisor` ou `divisor + 2`.
+   - Retorna `False` se um divisor for encontrado.
 
 7. `return True`
-   - Se nenhum divisor for encontrado, `n` é primo.
+   - Se não houver divisor válido, o número é primo.
 
-## Bloco de teste
+## Como a saída é montada
 
-O trecho abaixo é executado apenas quando o arquivo é rodado diretamente:
+- `formatar_resultado(numero)` retorna uma string como:
+  - `"17 primo"`
+  - `"20 não é primo"`
+
+## Execução principal
+
+No bloco:
 
 ```python
 if __name__ == "__main__":
-    teste_numeros = [1, 2, 3, 4, 16, 17, 18, 19, 20, 23]
-    for numero in teste_numeros:
-        print(f"{numero} {'primo' if eh_primo(numero) else 'não é primo'}")
+    main()
 ```
 
-- Ele define uma lista de números para testar.
-- Para cada número, imprime se ele é primo ou não.
+- `main()` percorre `TESTE_NUMEROS`.
+- Para cada número, imprime o resultado formatado.
 
-## Resumo
+## Vantagens do código atualizado
 
-- `eh_primo(n)` retorna `True` se `n` for primo.
-- A função evita verificações desnecessárias usando propriedades dos primos.
-- O teste demonstra o comportamento com alguns exemplos comuns.
+- Nomes de funções e variáveis mais claros.
+- Funções pequenas e separadas em responsabilidades.
+- Uso de tipagem simples com `int` e `List[int]`.
+- Bloco `main()` deixa a execução mais organizada.
